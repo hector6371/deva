@@ -1,4 +1,5 @@
 import brute_force
+import human
 import util
 
 
@@ -56,11 +57,13 @@ def create_board():
 
 if __name__ == '__main__':
     board = create_board()
-    print('initial board is:')
+    print('######### Initial board is ######### ')
     util.print_board(board)
 
+    board = human.solve(board)
+
+    print('######### Solving board with brute force######### ')
     brute_force.solve_brute_force(board)
 
-    print('final board is:')
+    print('######### Final board is ######### ')
     util.print_board(board)
-    # check_singles(board)
