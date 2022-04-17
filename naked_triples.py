@@ -1,0 +1,89 @@
+import naked
+
+
+def check_triples(board, candidate_board):
+    print('######### Checking naked triples #########')
+    found_any = False
+
+    if check_triples_in_rows(candidate_board):
+        found_any = True
+    # if check_triples_in_cols(candidate_board):
+    #     found_any = True
+    # if check_triples_in_areas(candidate_board):
+    #     found_any = True
+    return found_any
+
+
+def check_triples_in_rows(candidate_board):
+    found_any = False
+    for row_no, row in enumerate(candidate_board):
+        for col_no, cell in enumerate(row):
+            if len(cell) == 2 or (len(cell) == 3):
+                print(f'Possible naked triple with values {cell} on ({row_no},{col_no})')
+
+                #for pairing_candidate_col_no, pairing_candidate_cell in enumerate(row):
+                for second_candidate_col_index in range(col_no + 1, 9):
+                    second_candidate_cell = candidate_board[row_no][second_candidate_col_index]
+                    if (len(second_candidate_cell) == 2 or len(second_candidate_cell) == 3) \
+                            and second_candidate_col_index != col_no:
+                        two_candidates_sum = set.union(second_candidate_cell, cell)
+                        if len(two_candidates_sum) == 3:
+                            print(f'Found pair for possible triple with values {cell} on ({row_no},{col_no}) and {second_candidate_cell} on ({row_no},{second_candidate_col_index})')
+
+                            # Search the remaining cells on the row for the third match
+                            for third_candidate_col_index in range(second_candidate_col_index + 1, 9):
+                                third_candidate_cell = candidate_board[row_no][third_candidate_col_index]
+                                if len(third_candidate_cell) == 2 or len(third_candidate_cell) == 3:
+                                    threesome_values = set.union(third_candidate_cell, two_candidates_sum)
+                                    if len(threesome_values) == 3:
+                                        print(f'Found naked triple with values {cell} on ({row_no},{col_no}), '
+                                              f' and {second_candidate_cell} on ({row_no},{second_candidate_col_index})'
+                                              f' and {third_candidate_cell} on ({row_no},{third_candidate_col_index})')
+                                        exception_cols = {col_no, second_candidate_col_index, third_candidate_col_index}
+                                        if naked.remove_candidate_from_row(candidate_board, threesome_values, row_no, exception_cols):
+                                            found_any = True
+    return found_any
+
+
+def check_triples_in_cols(candidate_board):
+    found_any = False
+
+    for col_no in range(0, 9):
+        current_col = [row[col_no] for row in candidate_board]
+        for row_no, cell in enumerate(current_col):
+            if len(cell) == 2:
+                print(f'Possible naked pair with values {cell} on ({row_no},{col_no})')
+
+                for pairing_candidate_row_no, pairing_candidate_cell in enumerate(current_col):
+                    if len(pairing_candidate_cell) == 2 and pairing_candidate_row_no != row_no and pairing_candidate_cell == cell:
+                        print(
+                            f'Found naked pair with values {cell} on ({row_no},{col_no}) and ({row_no},{pairing_candidate_row_no})')
+                        exception_cols = {row_no, pairing_candidate_row_no}
+                        if naked.remove_candidate_from_col(candidate_board, cell, col_no, exception_cols):
+                            found_any = True
+    return found_any
+
+
+def check_triples_in_areas(candidate_board):
+    found_any = False
+
+    for row_no, row in enumerate(candidate_board):
+        for col_no, cell in enumerate(row):
+            if len(cell) == 2:
+                print(f'Possible naked pair with values {cell} on ({row_no},{col_no})')
+
+                area_row_start = row_no - (row_no % 3)
+                area_col_start = col_no - (col_no % 3)
+
+                for row_index in range(area_row_start, area_row_start + 3):
+                    for col_index in range(area_col_start, area_col_start + 3):
+                        try:
+                            pairing_candidate_cell = candidate_board[row_index][col_index]
+                            if len(pairing_candidate_cell) == 2 and (col_index != col_no or row_index != row_no) and pairing_candidate_cell == cell:
+                                print(f'Found naked pair with values {cell} on ({row_no},{col_no}) and ({row_index},{col_index})')
+                                exception_pairs = {(row_no, col_no), (row_index, col_index)}
+                                if naked.remove_candidate_from_area(candidate_board, cell, row_no, col_no, exception_pairs):
+                                    found_any = True
+                        except KeyError:
+                            pass
+    return found_any
