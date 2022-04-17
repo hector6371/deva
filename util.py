@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def print_board(board):
     for row in board:
         print(row)  # Press Ctrl+8 to toggle the breakpoint.
@@ -53,3 +56,5 @@ def get_area_cells(board, row_no, col_no):
             area_cells.add(board[row_index][col_index])
 
     return area_cells
+
+
