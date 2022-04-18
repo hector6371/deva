@@ -7,83 +7,113 @@ def check_triples(board, candidate_board):
 
     if check_triples_in_rows(candidate_board):
         found_any = True
-    # if check_triples_in_cols(candidate_board):
-    #     found_any = True
-    # if check_triples_in_areas(candidate_board):
-    #     found_any = True
+    if check_triples_in_cols(candidate_board):
+        found_any = True
+    if check_triples_in_areas(candidate_board):
+        found_any = True
     return found_any
 
 
 def check_triples_in_rows(candidate_board):
     found_any = False
-    for row_no, row in enumerate(candidate_board):
-        for col_no, cell in enumerate(row):
-            if len(cell) == 2 or (len(cell) == 3):
-                print(f'Possible naked triple with values {cell} on ({row_no},{col_no})')
+    for first_candidate_row_index, row in enumerate(candidate_board):
+        for first_candidate_col_index, first_candidate_cell in enumerate(row):
 
-                #for pairing_candidate_col_no, pairing_candidate_cell in enumerate(row):
-                for second_candidate_col_index in range(col_no + 1, 9):
-                    second_candidate_cell = candidate_board[row_no][second_candidate_col_index]
+            # For each cell
+            if len(first_candidate_cell) == 2 or (len(first_candidate_cell) == 3):
+                print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
+
+                # Iterate on the rest of the row
+                for second_candidate_col_index in range(first_candidate_col_index + 1, 9):
+                    second_candidate_cell = candidate_board[first_candidate_row_index][second_candidate_col_index]
                     if (len(second_candidate_cell) == 2 or len(second_candidate_cell) == 3) \
-                            and second_candidate_col_index != col_no:
-                        two_candidates_sum = set.union(second_candidate_cell, cell)
-                        if len(two_candidates_sum) == 3:
-                            print(f'Found pair for possible triple with values {cell} on ({row_no},{col_no}) and {second_candidate_cell} on ({row_no},{second_candidate_col_index})')
+                            and second_candidate_col_index != first_candidate_col_index:
+                        two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
+                        if len(two_candidates_sum_values) == 3:
+                            print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})')
 
                             # Search the remaining cells on the row for the third match
                             for third_candidate_col_index in range(second_candidate_col_index + 1, 9):
-                                third_candidate_cell = candidate_board[row_no][third_candidate_col_index]
+                                third_candidate_cell = candidate_board[first_candidate_row_index][third_candidate_col_index]
                                 if len(third_candidate_cell) == 2 or len(third_candidate_cell) == 3:
-                                    threesome_values = set.union(third_candidate_cell, two_candidates_sum)
-                                    if len(threesome_values) == 3:
-                                        print(f'Found naked triple with values {cell} on ({row_no},{col_no}), '
-                                              f' and {second_candidate_cell} on ({row_no},{second_candidate_col_index})'
-                                              f' and {third_candidate_cell} on ({row_no},{third_candidate_col_index})')
-                                        exception_cols = {col_no, second_candidate_col_index, third_candidate_col_index}
-                                        if naked.remove_candidate_from_row(candidate_board, threesome_values, row_no, exception_cols):
+                                    three_candidates_sum_values = set.union(third_candidate_cell, two_candidates_sum_values)
+                                    if len(three_candidates_sum_values) == 3:
+                                        print(f'Found naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
+                                              f' and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})'
+                                              f' and {third_candidate_cell} on ({first_candidate_row_index},{third_candidate_col_index})')
+                                        exception_cols = {first_candidate_col_index, second_candidate_col_index, third_candidate_col_index}
+                                        if naked.remove_candidate_from_row(candidate_board, three_candidates_sum_values, first_candidate_row_index, exception_cols):
                                             found_any = True
     return found_any
 
 
 def check_triples_in_cols(candidate_board):
     found_any = False
+    for first_candidate_row_index, row in enumerate(candidate_board):
+        for first_candidate_col_index, first_candidate_cell in enumerate(row):
 
-    for col_no in range(0, 9):
-        current_col = [row[col_no] for row in candidate_board]
-        for row_no, cell in enumerate(current_col):
-            if len(cell) == 2:
-                print(f'Possible naked pair with values {cell} on ({row_no},{col_no})')
+            # For each cell
+            if len(first_candidate_cell) == 2 or (len(first_candidate_cell) == 3):
+                print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
 
-                for pairing_candidate_row_no, pairing_candidate_cell in enumerate(current_col):
-                    if len(pairing_candidate_cell) == 2 and pairing_candidate_row_no != row_no and pairing_candidate_cell == cell:
-                        print(
-                            f'Found naked pair with values {cell} on ({row_no},{col_no}) and ({row_no},{pairing_candidate_row_no})')
-                        exception_cols = {row_no, pairing_candidate_row_no}
-                        if naked.remove_candidate_from_col(candidate_board, cell, col_no, exception_cols):
-                            found_any = True
+                # Iterate on the rest of the col
+                for second_candidate_row_index in range(first_candidate_row_index + 1, 9):
+                    second_candidate_cell = candidate_board[second_candidate_row_index][first_candidate_col_index]
+                    if (len(second_candidate_cell) == 2 or len(second_candidate_cell) == 3) \
+                            and second_candidate_row_index != first_candidate_row_index:
+                        two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
+                        if len(two_candidates_sum_values) == 3:
+                            print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})')
+
+                            # Search the remaining cells on the col for the third match
+                            for third_candidate_row_index in range(second_candidate_row_index + 1, 9):
+                                third_candidate_cell = candidate_board[third_candidate_row_index][first_candidate_col_index]
+                                if len(third_candidate_cell) == 2 or len(third_candidate_cell) == 3:
+                                    three_candidates_sum_values = set.union(third_candidate_cell, two_candidates_sum_values)
+                                    if len(three_candidates_sum_values) == 3:
+                                        print(f'Found naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
+                                              f' and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})'
+                                              f' and {third_candidate_cell} on ({third_candidate_row_index},{first_candidate_col_index})')
+                                        exception_rows = {first_candidate_row_index, second_candidate_row_index, third_candidate_row_index}
+                                        if naked.remove_candidate_from_col(candidate_board, three_candidates_sum_values, first_candidate_col_index, exception_rows):
+                                            found_any = True
     return found_any
 
 
 def check_triples_in_areas(candidate_board):
     found_any = False
+    for first_candidate_row_index, row in enumerate(candidate_board):
+        for first_candidate_col_index, first_candidate_cell in enumerate(row):
 
-    for row_no, row in enumerate(candidate_board):
-        for col_no, cell in enumerate(row):
-            if len(cell) == 2:
-                print(f'Possible naked pair with values {cell} on ({row_no},{col_no})')
+            # For each cell
+            if len(first_candidate_cell) == 2 or (len(first_candidate_cell) == 3):
+                print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
 
-                area_row_start = row_no - (row_no % 3)
-                area_col_start = col_no - (col_no % 3)
+                # Iterate on the rest of the area
+                area_row_end = min(3 + first_candidate_row_index - (first_candidate_row_index % 3), 9)
+                area_col_end = min(3 + first_candidate_col_index - (first_candidate_col_index % 3), 9)
+                for second_candidate_row_index in range(first_candidate_row_index + 1, area_row_end):
+                    for second_candidate_col_index in range(first_candidate_col_index, area_col_end):
+                        second_candidate_cell = candidate_board[second_candidate_row_index][second_candidate_col_index]
+                        if len(second_candidate_cell) == 2 or len(second_candidate_cell) == 3:
+                            two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
+                            if len(two_candidates_sum_values) == 3:
+                                print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{second_candidate_col_index})')
 
-                for row_index in range(area_row_start, area_row_start + 3):
-                    for col_index in range(area_col_start, area_col_start + 3):
-                        try:
-                            pairing_candidate_cell = candidate_board[row_index][col_index]
-                            if len(pairing_candidate_cell) == 2 and (col_index != col_no or row_index != row_no) and pairing_candidate_cell == cell:
-                                print(f'Found naked pair with values {cell} on ({row_no},{col_no}) and ({row_index},{col_index})')
-                                exception_pairs = {(row_no, col_no), (row_index, col_index)}
-                                if naked.remove_candidate_from_area(candidate_board, cell, row_no, col_no, exception_pairs):
-                                    found_any = True
-                        except KeyError:
-                            pass
+                                # Search the remaining cells on the area for the third match
+                                for third_candidate_row_index in range(second_candidate_row_index + 1, area_row_end):
+                                    for third_candidate_col_index in range(second_candidate_col_index, area_col_end):
+                                        third_candidate_cell = candidate_board[third_candidate_row_index][third_candidate_col_index]
+                                        if len(third_candidate_cell) == 2 or len(third_candidate_cell) == 3:
+                                            three_candidates_sum_values = set.union(third_candidate_cell, two_candidates_sum_values)
+                                            if len(three_candidates_sum_values) == 3:
+                                                print(f'Found naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
+                                                      f' and {second_candidate_cell} on ({second_candidate_row_index},{second_candidate_col_index})'
+                                                      f' and {third_candidate_cell} on ({third_candidate_row_index},{third_candidate_col_index})')
+                                                exception_pairs = {(first_candidate_row_index, first_candidate_col_index),
+                                                                   (second_candidate_row_index, second_candidate_col_index),
+                                                                   (third_candidate_row_index, third_candidate_col_index)}
+                                                if naked.remove_candidate_from_area(candidate_board, three_candidates_sum_values, first_candidate_row_index, first_candidate_col_index, exception_pairs):
+                                                    found_any = True
     return found_any
+

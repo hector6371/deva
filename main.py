@@ -86,8 +86,8 @@ if __name__ == '__main__':
 
     board = human.solve(board)
 
-    print('######### Solving board with brute force######### ')
-    brute_force.solve_brute_force(board)
+    #print('######### Solving board with brute force######### ')
+    #brute_force.solve_brute_force(board)
 
     print('######### Final board is ######### ')
     util.print_board(board)
