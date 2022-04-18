@@ -1,4 +1,5 @@
 import naked_doubles
+import naked_quadruples
 import naked_singles
 import naked_triples
 import util
@@ -75,6 +76,6 @@ def check_naked(board, candidate_board):
         found_any = True
     while naked_triples.check_triples(board, candidate_board):
         found_any = True
-    # while check_quads(board, candidate_board):
-    #     found_any = True
+    while naked_quadruples.check_quadruples(board, candidate_board):
+        found_any = True
     return found_any
