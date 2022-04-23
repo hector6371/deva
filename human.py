@@ -2,13 +2,14 @@
 import util
 from hidden import hidden
 from naked import naked
+from pointing import pointing
 
 candidate_board = []
 
 solving_states = {
     1: naked.check,
     2: hidden.check,
-    #3: pointing.check,
+    3: pointing.check,
     #4: xwing_family.check,
     #5: forced-chains.check
 }
