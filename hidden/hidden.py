@@ -67,8 +67,8 @@ def check(board, candidate_board):
     found_any = False
     while hidden_singles.check(board, candidate_board):
         found_any = True
-    #while hidden_doubles.check(board, candidate_board):
-    #    found_any = True
+    while hidden_doubles.check(board, candidate_board):
+        found_any = True
     # while hidden_triples.check(board, candidate_board):
     #     found_any = True
     # while hidden_quadruples.check(board, candidate_board):

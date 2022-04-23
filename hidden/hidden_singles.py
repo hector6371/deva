@@ -71,8 +71,9 @@ def check_areas(board, candidate_board):
 
                     while next_index_pair is not None:
                         possible_repeated_candidate_cell = candidate_board[next_index_pair[0]][next_index_pair[1]]
-                        if candidate_value in possible_repeated_candidate_cell:
-                            is_repeated = True
+                        if next_index_pair != (row_index, col_index):
+                            if candidate_value in possible_repeated_candidate_cell:
+                                is_repeated = True
                         next_index_pair = util.next_area_cell_indexes(next_index_pair[0], next_index_pair[1])
                     if not is_repeated:
                         found_any = True
