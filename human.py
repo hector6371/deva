@@ -1,6 +1,7 @@
-import hidden
-import naked
+
 import util
+from hidden import hidden
+from naked import naked
 
 candidate_board = []
 
@@ -46,7 +47,7 @@ def solve(board):
     while solving_state < 6:
         if solving_states.get(solving_state, step_not_implemented_yet)(board, candidate_board):
             print('Restarting flow')
-            solving_state = 1 #restart flow
+            solving_state = 1  # restart flow
         else:
             print('Moving to next flow step')
             solving_state += 1

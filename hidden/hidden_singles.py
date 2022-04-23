@@ -19,7 +19,7 @@ def check_rows(board, candidate_board):
     for row_index in range(0, 9):
         for col_index in range(0, 9):
             cell = candidate_board[row_index][col_index]
-            if len(cell) > 2:  # 0 is no candidates and 1 is naked
+            if len(cell) >= 2:  # 0 is no candidates and 1 is naked
                 for candidate_value in cell:
                     is_repeated = False
                     for searching_repeated_candidate_col_index in range(0, 9):
@@ -41,7 +41,7 @@ def check_cols(board, candidate_board):
     for col_index in range(0, 9):
         for row_index in range(0, 9):
             cell = candidate_board[row_index][col_index]
-            if len(cell) > 2:  # 0 is no candidates and 1 is naked
+            if len(cell) >= 2:  # 0 is no candidates and 1 is naked
                 for candidate_value in cell:
                     is_repeated = False
                     for searching_repeated_candidate_row_index in range(0, 9):
@@ -63,7 +63,7 @@ def check_areas(board, candidate_board):
     for row_index in range(0, 9):
         for col_index in range(0, 9):
             cell = candidate_board[row_index][col_index]
-            if len(cell) > 2:  # 0 is no candidates and 1 is naked
+            if len(cell) >= 2:  # 0 is no candidates and 1 is naked
                 for candidate_value in cell:
                     is_repeated = False
 

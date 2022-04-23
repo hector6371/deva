@@ -1,11 +1,5 @@
-import naked_doubles
-import naked_quadruples
-import naked_singles
-import naked_triples
-import util
-
-
 # Naked is where, in a row, col or area, there are the same 1, 2, 3 or 4 candidates on 1,2,3 or 4 cells respectively
+from naked import naked_singles, naked_doubles, naked_triples, naked_quadruples
 
 
 def check(board, candidate_board):

@@ -29,7 +29,7 @@ def check_doubles_in_rows(candidate_board):
                     if len(pairing_candidate_cell) == 2 and pairing_candidate_col_no != col_no and pairing_candidate_cell == cell:
                         print(f'Found naked pair with values {cell} on ({row_no},{col_no}) and ({row_no},{pairing_candidate_col_no})')
                         exception_cols = {col_no, pairing_candidate_col_no}
-                        if naked.remove_candidate_from_row(candidate_board, cell, row_no, exception_cols):
+                        if util.remove_candidate_from_row(candidate_board, cell.copy(), row_no, exception_cols):
                             found_any = True
     return found_any
 
@@ -48,7 +48,7 @@ def check_doubles_in_cols(candidate_board):
                         print(
                             f'Found naked pair with values {cell} on ({row_no},{col_no}) and ({row_no},{pairing_candidate_row_no})')
                         exception_cols = {row_no, pairing_candidate_row_no}
-                        if naked.remove_candidate_from_col(candidate_board, cell, col_no, exception_cols):
+                        if util.remove_candidate_from_col(candidate_board, cell.copy(), col_no, exception_cols):
                             found_any = True
     return found_any
 
@@ -71,7 +71,7 @@ def check_doubles_in_areas(candidate_board):
                             if len(pairing_candidate_cell) == 2 and (col_index != col_no or row_index != row_no) and pairing_candidate_cell == cell:
                                 print(f'Found naked pair with values {cell} on ({row_no},{col_no}) and ({row_index},{col_index})')
                                 exception_pairs = {(row_no, col_no), (row_index, col_index)}
-                                if naked.remove_candidate_from_area(candidate_board, cell, row_no, col_no, exception_pairs):
+                                if util.remove_candidate_from_area(candidate_board, cell.copy(), row_no, col_no, exception_pairs):
                                     found_any = True
                         except KeyError:
                             pass

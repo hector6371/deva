@@ -1,5 +1,3 @@
-import numpy as np
-
 
 def print_board(board):
     for row in board:

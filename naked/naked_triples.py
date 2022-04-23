@@ -1,4 +1,5 @@
-import naked
+import util
+from naked import naked
 
 
 def check_triples(board, candidate_board):
@@ -42,7 +43,7 @@ def check_triples_in_rows(candidate_board):
                                               f' and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})'
                                               f' and {third_candidate_cell} on ({first_candidate_row_index},{third_candidate_col_index})')
                                         exception_cols = {first_candidate_col_index, second_candidate_col_index, third_candidate_col_index}
-                                        if naked.remove_candidate_from_row(candidate_board, three_candidates_sum_values, first_candidate_row_index, exception_cols):
+                                        if util.remove_candidate_from_row(candidate_board, three_candidates_sum_values, first_candidate_row_index, exception_cols):
                                             found_any = True
     return found_any
 
@@ -75,7 +76,7 @@ def check_triples_in_cols(candidate_board):
                                               f' and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})'
                                               f' and {third_candidate_cell} on ({third_candidate_row_index},{first_candidate_col_index})')
                                         exception_rows = {first_candidate_row_index, second_candidate_row_index, third_candidate_row_index}
-                                        if naked.remove_candidate_from_col(candidate_board, three_candidates_sum_values, first_candidate_col_index, exception_rows):
+                                        if util.remove_candidate_from_col(candidate_board, three_candidates_sum_values, first_candidate_col_index, exception_rows):
                                             found_any = True
     return found_any
 
@@ -118,7 +119,7 @@ def check_triples_in_areas(candidate_board):
                                                         exception_pairs = {(first_candidate_row_index, first_candidate_col_index),
                                                                            (second_candidate_row_index, second_candidate_col_index),
                                                                            (third_candidate_row_index, third_candidate_col_index)}
-                                                        if naked.remove_candidate_from_area(candidate_board, three_candidates_sum_values, first_candidate_row_index, first_candidate_col_index, exception_pairs):
+                                                        if util.remove_candidate_from_area(candidate_board, three_candidates_sum_values, first_candidate_row_index, first_candidate_col_index, exception_pairs):
                                                             found_any = True
     return found_any
 

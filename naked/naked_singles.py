@@ -1,4 +1,4 @@
-import naked
+import util
 
 
 def check_singles(board, candidate_board):
@@ -10,6 +10,6 @@ def check_singles(board, candidate_board):
                 print(f'Found one naked single with value {cell} on ({row_no},{col_no})')
                 board[row_no][col_no] = min(cell)  # retrieve the first element
                 candidate_board[row_no][col_no] = set()
-                naked.remove_candidates(candidate_board, cell, row_no, col_no)
+                util.remove_candidates(candidate_board, cell.copy(), row_no, col_no)
                 found_any = True
     return found_any
