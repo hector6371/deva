@@ -11,8 +11,8 @@ def check(board, candidate_board):
         found_any = True
     if check_cols(board, candidate_board):
         found_any = True
-    # if check_areas(board, candidate_board):
-    #     found_any = True
+    if check_in_areas(board, candidate_board):
+        found_any = True
     return found_any
 
 
@@ -20,9 +20,9 @@ def check_rows(board, candidate_board):
     found_any = False
     for row_index in range(0, 9):
         for col_index in range(0, 9):
-            cell = candidate_board[row_index][col_index]
-            if len(cell) >= 3:  # 0 is no candidates, 1 is insufficient, 2 could have single hidden or double naked
-                for candidate_pair in itertools.combinations(cell, 2):
+            cell_candidates = candidate_board[row_index][col_index].copy()
+            if len(cell_candidates) >= 3:  # 0 is no candidates, 1 is insufficient, 2 could have single hidden or double naked
+                for candidate_pair in itertools.combinations(cell_candidates, 2):
                     candidate_pair_set = set(candidate_pair)
                     count_repeated = 1
                     exception_cols = {col_index}
@@ -45,9 +45,9 @@ def check_cols(board, candidate_board):
     found_any = False
     for row_index in range(0, 9):
         for col_index in range(0, 9):
-            cell = candidate_board[row_index][col_index]
-            if len(cell) >= 3:  # 0 is no candidates, 1 is insufficient, 2 could have single hidden or double naked
-                for candidate_pair in itertools.combinations(cell, 2):
+            cell_candidates = candidate_board[row_index][col_index].copy()
+            if len(cell_candidates) >= 3:  # 0 is no candidates, 1 is insufficient, 2 could have single hidden or double naked
+                for candidate_pair in itertools.combinations(cell_candidates, 2):
                     candidate_pair_set = set(candidate_pair)
                     count_repeated = 1
                     exception_rows = {row_index}
@@ -70,9 +70,9 @@ def check_in_areas(board, candidate_board):
     found_any = False
     for row_index in range(0, 9):
         for col_index in range(0, 9):
-            cell = candidate_board[row_index][col_index]
-            if len(cell) >= 3:  # 0 is no candidates, 1 is insufficient, 2 could have single hidden or double naked
-                for candidate_pair in itertools.combinations(cell, 2):
+            cell_candidates = candidate_board[row_index][col_index].copy()
+            if len(cell_candidates) >= 3:  # 0 is no candidates, 1 is insufficient, 2 could have single hidden or double naked
+                for candidate_pair in itertools.combinations(cell_candidates, 2):
                     candidate_pair_set = set(candidate_pair)
                     count_repeated = 1
                     exception_pairs = {(row_index, col_index)}
@@ -92,5 +92,5 @@ def check_in_areas(board, candidate_board):
                         print(f'Found one hidden double with values {candidate_pair_set} on {exception_pairs}')
                         for hidden_pair in exception_pairs:
                             candidate_board[hidden_pair[0]][hidden_pair[1]] = candidate_pair_set
-                        util.remove_candidate_from_row(candidate_board, candidate_pair_set, row_index, exception_pairs)
+                        util.remove_candidate_from_area(candidate_board, candidate_pair_set, row_index, col_index, exception_pairs)
     return found_any

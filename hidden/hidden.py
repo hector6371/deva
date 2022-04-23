@@ -1,6 +1,6 @@
 
 # Hidden: Singles, pairs, triples, quads (A hidden pair occurs when a pair of numbers appears in exactly two squares in a row, column, or block, but those two numbers aren't the only ones in their squares)
-from hidden import hidden_doubles, hidden_singles
+from hidden import hidden_doubles, hidden_singles, hidden_triples, hidden_quadruples
 
 
 def remove_candidates(candidate_board, candidate_value, row_no, col_no):
@@ -69,8 +69,8 @@ def check(board, candidate_board):
         found_any = True
     while hidden_doubles.check(board, candidate_board):
         found_any = True
-    # while hidden_triples.check(board, candidate_board):
-    #     found_any = True
-    # while hidden_quadruples.check(board, candidate_board):
-    #     found_any = True
+    while hidden_triples.check(board, candidate_board):
+        found_any = True
+    while hidden_quadruples.check(board, candidate_board):
+        found_any = True
     return found_any

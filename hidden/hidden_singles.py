@@ -18,9 +18,9 @@ def check_rows(board, candidate_board):
     found_any = False
     for row_index in range(0, 9):
         for col_index in range(0, 9):
-            cell = candidate_board[row_index][col_index]
-            if len(cell) >= 2:  # 0 is no candidates and 1 is naked
-                for candidate_value in cell:
+            cell_candidates = candidate_board[row_index][col_index].copy()
+            if len(cell_candidates) >= 2:  # 0 is no candidates and 1 is naked
+                for candidate_value in cell_candidates:
                     is_repeated = False
                     for searching_repeated_candidate_col_index in range(0, 9):
                         if searching_repeated_candidate_col_index != col_index:
@@ -40,9 +40,9 @@ def check_cols(board, candidate_board):
     found_any = False
     for col_index in range(0, 9):
         for row_index in range(0, 9):
-            cell = candidate_board[row_index][col_index]
-            if len(cell) >= 2:  # 0 is no candidates and 1 is naked
-                for candidate_value in cell:
+            cell_candidates = candidate_board[row_index][col_index].copy()
+            if len(cell_candidates) >= 2:  # 0 is no candidates and 1 is naked
+                for candidate_value in cell_candidates:
                     is_repeated = False
                     for searching_repeated_candidate_row_index in range(0, 9):
                         if searching_repeated_candidate_row_index != row_index:
@@ -62,9 +62,9 @@ def check_areas(board, candidate_board):
     found_any = False
     for row_index in range(0, 9):
         for col_index in range(0, 9):
-            cell = candidate_board[row_index][col_index]
-            if len(cell) >= 2:  # 0 is no candidates and 1 is naked
-                for candidate_value in cell:
+            cell_candidates = candidate_board[row_index][col_index].copy()
+            if len(cell_candidates) >= 2:  # 0 is no candidates and 1 is naked
+                for candidate_value in cell_candidates:
                     is_repeated = False
 
                     next_index_pair = util.get_area_start_indexes(row_index, col_index)
