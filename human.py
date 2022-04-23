@@ -2,6 +2,17 @@ import naked
 import util
 
 candidate_board = []
+
+solving_states = {
+    1: naked.check_naked,
+    #2: hidden.check_hidden,
+    #3: 'pointing',
+    #4: 'xwing-family',
+    #5: 'forced-chains'
+}
+solving_state = 1
+
+
 # Solving order
 # Naked: Singles, pairs, triples, quads
 # Hidden: Singles, pairs, triples, quads (A hidden pair occurs when a pair of numbers appears in exactly two squares in a row, column, or block, but those two numbers aren't the only ones in their squares)
@@ -19,13 +30,27 @@ def initialize_candidate_board():
     candidate_board = [[set() for i in range(9)] for i in range(9)]
 
 
+def step_not_implemented_yet(board, candidate_board):
+    print('Step not implemented yet')
+    pass
+
+
 def solve(board):
+    global solving_state
+
     initialize_candidate_board()
 
     fill_candidates_board(board)
 
-    while naked.check_naked(board, candidate_board):
-        pass
+    while solving_state < 6:
+        if solving_states.get(solving_state, step_not_implemented_yet)(board, candidate_board):
+            print('Restarting flow')
+            solving_state = 1 #restart flow
+        else:
+            print('Moving to next flow step')
+            solving_state += 1
+
+
 
     print('######### Candidates list is ######### ')
     util.print_board(candidate_board)
