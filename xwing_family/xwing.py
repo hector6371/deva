@@ -18,6 +18,14 @@ def check(board, candidate_board):
                     if util.remove_candidate_from_col(candidate_board, {candidate_value}, fourth_candidate_coordinates[1], exception_rows):
                         found_any = True
 
+                fourth_candidate_coordinates = search_down_square(candidate_board, candidate_value, row_index, col_index)
+                if fourth_candidate_coordinates is not None:
+                    exception_cols = {col_index, fourth_candidate_coordinates[1]}
+                    if util.remove_candidate_from_row(candidate_board, {candidate_value}, row_index, exception_cols):
+                        found_any = True
+                    if util.remove_candidate_from_row(candidate_board, {candidate_value}, fourth_candidate_coordinates[0], exception_cols):
+                        found_any = True
+
     return found_any
 
 
@@ -49,16 +57,59 @@ def search_right_square(candidate_board, candidate_value, row_index, col_index):
             if candidate_value in cell:
                 # Possible third value, checking if there is a fourth value in square and only two values in row
                 third_candidate_coordinates = (matching_row_index, col_index)
-                if candidate_value in candidate_board[row_index][second_candidate_coordinates[1]]:
+                if candidate_value in candidate_board[third_candidate_coordinates[0]][second_candidate_coordinates[1]]:
                     # Found square. Checking if only two values in bottom row
                     candidates_in_bottom_row = 0
                     for counting_col_index in range(0, 9):
                         if candidate_value in candidate_board[matching_row_index][counting_col_index]:
                             candidates_in_bottom_row += 1
                     if candidates_in_bottom_row == 2:
-                        print(f'Found xwing square for value {candidate_value} '
+                        print(f'Found xwing square right-first for value {candidate_value} '
                               f'in rows {row_index}, {matching_row_index} '
                               f'and cols {col_index}, {second_candidate_coordinates[1]}')
                         fourth_candidate_coordinates = (third_candidate_coordinates[0], second_candidate_coordinates[1])
+                        break
+        return fourth_candidate_coordinates
+
+
+#  Search down
+#  if found exactly 2 values in col, continue. Otherwise, discard
+#  Look right on first column for the third possible value
+#    - If found, check down for the cell in the square. If it has the value and, in this col are only two cells
+#    with this value, found an xwing
+#    - Otherwise, keep looking right and repeat previous step
+def search_down_square(candidate_board, candidate_value, row_index, col_index):
+    num_candidates_in_first_col = 1
+    second_candidate_coordinates = None
+    third_candidate_coordinates = None
+    fourth_candidate_coordinates = None
+    for matching_row_index in range(0, 9):
+        cell = candidate_board[matching_row_index][col_index]
+
+        if matching_row_index != row_index and candidate_value in cell:
+            # count every candidate on col, but only use if one is down. (An x-wing on an upper cell should have
+            # been checked in a previous iteration)
+            if matching_row_index > row_index:
+                second_candidate_coordinates = (matching_row_index, col_index)
+            num_candidates_in_first_col += 1
+    if num_candidates_in_first_col != 2 or second_candidate_coordinates is None:  # could be None if this search is for the bottom most value
+        return None
+    else:
+        for matching_col_index in range(col_index + 1, 9):
+            cell = candidate_board[row_index][matching_col_index]
+            if candidate_value in cell:
+                # Possible third value, checking if there is a fourth value in square and only two values in col
+                third_candidate_coordinates = (row_index, matching_col_index)
+                if candidate_value in candidate_board[second_candidate_coordinates[0]][third_candidate_coordinates[1]]:
+                    # Found square. Checking if only two values in right col
+                    candidates_in_right_col = 0
+                    for counting_row_index in range(0, 9):
+                        if candidate_value in candidate_board[counting_row_index][matching_col_index]:
+                            candidates_in_right_col += 1
+                    if candidates_in_right_col == 2:
+                        print(f'Found xwing square down-first for value {candidate_value} '
+                              f'in rows {row_index}, {second_candidate_coordinates[0]} '
+                              f'and cols {col_index}, {matching_col_index}')
+                        fourth_candidate_coordinates = (second_candidate_coordinates[0], third_candidate_coordinates[1])
                         break
         return fourth_candidate_coordinates
