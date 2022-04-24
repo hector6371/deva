@@ -61,6 +61,7 @@ def remove_candidate_from_row(candidate_board, candidates_values, row_no, except
             for candidate_value in candidates_values:
                 try:
                     cell.remove(candidate_value)
+                    print(f'Removed candidate {candidate_value} from ({row_no}, {col_no})')
                     removed_something = True
                 except KeyError:
                     pass
@@ -78,6 +79,7 @@ def remove_candidate_from_col(candidate_board, candidates_values, col_no, except
             for candidate_value in candidates_values:
                 try:
                     cell.remove(candidate_value)
+                    print(f'Removed candidate {candidate_value} from ({row_no}, {col_no})')
                     removed_something = True
                 except KeyError:
                     pass
@@ -98,6 +100,7 @@ def remove_candidate_from_area(candidate_board, candidates_value, row_no, col_no
                 for candidate_value in candidates_value:
                     try:
                         candidate_board[row_index][col_index].remove(candidate_value)
+                        print(f'Removed candidate {candidate_value} from ({row_index}, {col_index})')
                         removed_something = True
                     except KeyError:
                         pass

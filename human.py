@@ -3,6 +3,7 @@ import util
 from hidden import hidden
 from naked import naked
 from pointing import pointing
+from xwing_family import xwing_family
 
 candidate_board = []
 
@@ -10,8 +11,8 @@ solving_states = {
     1: naked.check,
     2: hidden.check,
     3: pointing.check,
-    #4: xwing_family.check,
-    #5: forced-chains.check
+    4: xwing_family.check,  # x-wing, swordfish and jellyfish
+    #5: forced-chains.check  # xy-wing, xyz-wing
 }
 solving_state = 1
 
@@ -46,6 +47,10 @@ def solve(board):
     fill_candidates_board(board)
 
     while solving_state < 6:
+        print('######### Candidates list is ######### ')
+        util.print_board(candidate_board)
+        print('######### Board is ######### ')
+        util.print_board(board)
         if solving_states.get(solving_state, step_not_implemented_yet)(board, candidate_board):
             print('Restarting flow')
             solving_state = 1  # restart flow
@@ -55,8 +60,6 @@ def solve(board):
 
 
 
-    print('######### Candidates list is ######### ')
-    util.print_board(candidate_board)
     return board
 
 
