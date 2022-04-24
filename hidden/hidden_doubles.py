@@ -36,7 +36,7 @@ def check_rows(board, candidate_board):
                         found_any = True
                         print(f'Found one hidden double with values {candidate_pair_set} on row ({row_index} and cols {exception_cols})')
                         for hidden_column_index in exception_cols:
-                            candidate_board[row_index][hidden_column_index] = candidate_pair_set
+                            candidate_board[row_index][hidden_column_index] = candidate_pair_set.copy()
                         util.remove_candidate_from_row(candidate_board, candidate_pair_set, row_index, exception_cols)
     return found_any
 
@@ -61,7 +61,7 @@ def check_cols(board, candidate_board):
                         found_any = True
                         print(f'Found one hidden double with values {candidate_pair_set} on rows ({exception_rows} and col {col_index})')
                         for hidden_row_index in exception_rows:
-                            candidate_board[hidden_row_index][col_index] = candidate_pair_set
+                            candidate_board[hidden_row_index][col_index] = candidate_pair_set.copy()
                         util.remove_candidate_from_col(candidate_board, candidate_pair_set, col_index, exception_rows)
     return found_any
 
@@ -91,6 +91,6 @@ def check_in_areas(board, candidate_board):
                         found_any = True
                         print(f'Found one hidden double with values {candidate_pair_set} on {exception_pairs}')
                         for hidden_pair in exception_pairs:
-                            candidate_board[hidden_pair[0]][hidden_pair[1]] = candidate_pair_set
+                            candidate_board[hidden_pair[0]][hidden_pair[1]] = candidate_pair_set.copy()
                         util.remove_candidate_from_area(candidate_board, candidate_pair_set, row_index, col_index, exception_pairs)
     return found_any

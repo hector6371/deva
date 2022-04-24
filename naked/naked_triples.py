@@ -6,23 +6,23 @@ def check_triples(board, candidate_board):
     print('######### Checking naked triples #########')
     found_any = False
 
-    if check_triples_in_rows(candidate_board):
+    if check_triples_in_rows(board, candidate_board):
         found_any = True
-    if check_triples_in_cols(candidate_board):
+    if check_triples_in_cols(board, candidate_board):
         found_any = True
-    if check_triples_in_areas(candidate_board):
+    if check_triples_in_areas(board, candidate_board):
         found_any = True
     return found_any
 
 
-def check_triples_in_rows(candidate_board):
+def check_triples_in_rows(board, candidate_board):
     found_any = False
     for first_candidate_row_index, row in enumerate(candidate_board):
         for first_candidate_col_index, first_candidate_cell in enumerate(row):
 
             # For each cell
             if len(first_candidate_cell) == 2 or (len(first_candidate_cell) == 3):
-                print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
+                #print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
 
                 # Iterate on the rest of the row
                 for second_candidate_col_index in range(first_candidate_col_index + 1, 9):
@@ -31,7 +31,7 @@ def check_triples_in_rows(candidate_board):
                             and second_candidate_col_index != first_candidate_col_index:
                         two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
                         if len(two_candidates_sum_values) == 3:
-                            print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})')
+                            #print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})')
 
                             # Search the remaining cells on the row for the third match
                             for third_candidate_col_index in range(second_candidate_col_index + 1, 9):
@@ -48,14 +48,14 @@ def check_triples_in_rows(candidate_board):
     return found_any
 
 
-def check_triples_in_cols(candidate_board):
+def check_triples_in_cols(board, candidate_board):
     found_any = False
     for first_candidate_row_index, row in enumerate(candidate_board):
         for first_candidate_col_index, first_candidate_cell in enumerate(row):
 
             # For each cell
             if len(first_candidate_cell) == 2 or (len(first_candidate_cell) == 3):
-                print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
+                #print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
 
                 # Iterate on the rest of the col
                 for second_candidate_row_index in range(first_candidate_row_index + 1, 9):
@@ -64,7 +64,7 @@ def check_triples_in_cols(candidate_board):
                             and second_candidate_row_index != first_candidate_row_index:
                         two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
                         if len(two_candidates_sum_values) == 3:
-                            print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})')
+                            #print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})')
 
                             # Search the remaining cells on the col for the third match
                             for third_candidate_row_index in range(second_candidate_row_index + 1, 9):
@@ -81,14 +81,14 @@ def check_triples_in_cols(candidate_board):
     return found_any
 
 
-def check_triples_in_areas(candidate_board):
+def check_triples_in_areas(board, candidate_board):
     found_any = False
     for first_candidate_row_index, row in enumerate(candidate_board):
         for first_candidate_col_index, first_candidate_cell in enumerate(row):
 
             # For each cell
             if len(first_candidate_cell) == 2 or (len(first_candidate_cell) == 3):
-                print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
+                #print(f'Possible naked triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
 
                 # Iterate on the whole area
                 area_row_start = first_candidate_row_index - (first_candidate_row_index % 3)
@@ -102,7 +102,7 @@ def check_triples_in_areas(candidate_board):
                             if len(second_candidate_cell) == 2 or len(second_candidate_cell) == 3:
                                 two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
                                 if len(two_candidates_sum_values) == 3:
-                                    print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{second_candidate_col_index})')
+                                    #print(f'Found pair for possible triple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{second_candidate_col_index})')
 
                                     # Search the cells on the area for the third match
                                     for third_candidate_row_index in range(area_row_start, area_row_end):

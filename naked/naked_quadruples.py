@@ -22,7 +22,7 @@ def check_quadruples_in_rows(candidate_board):
 
             # For each cell
             if len(first_candidate_cell) >= 2 and (len(first_candidate_cell) <= 4):
-                print(f'Possible naked quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
+                #print(f'Possible naked quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
 
                 # Iterate on the rest of the row
                 for second_candidate_col_index in range(first_candidate_col_index + 1, 9):
@@ -30,7 +30,7 @@ def check_quadruples_in_rows(candidate_board):
                     if len(second_candidate_cell) >= 2 and (len(second_candidate_cell) <= 4):
                         two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
                         if len(two_candidates_sum_values) == 3 or len(two_candidates_sum_values) == 4:
-                            print(f'Found pair for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})')
+                            #print(f'Found pair for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})')
 
                             # Search the remaining cells on the row for the third match
                             for third_candidate_col_index in range(second_candidate_col_index + 1, 9):
@@ -39,9 +39,9 @@ def check_quadruples_in_rows(candidate_board):
                                     three_candidates_sum_values = set.union(third_candidate_cell, two_candidates_sum_values)
                                     if len(three_candidates_sum_values) == 4:
 
-                                        print(f'Found triple for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
-                                              f' and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})'
-                                              f' and {third_candidate_cell} on ({first_candidate_row_index},{third_candidate_col_index})')
+                                        #print(f'Found triple for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
+                                        #      f' and {second_candidate_cell} on ({first_candidate_row_index},{second_candidate_col_index})'
+                                        #      f' and {third_candidate_cell} on ({first_candidate_row_index},{third_candidate_col_index})')
 
                                         # Search the remaining cells on the row for the fourth match
                                         for fourth_candidate_col_index in range(third_candidate_col_index + 1, 9):
@@ -67,7 +67,7 @@ def check_quadruples_in_cols(candidate_board):
 
             # For each cell
             if len(first_candidate_cell) >= 2 and (len(first_candidate_cell) <= 4):
-                print(f'Possible naked quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
+                #print(f'Possible naked quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
 
                 # Iterate on the rest of the col
                 for second_candidate_row_index in range(first_candidate_row_index + 1, 9):
@@ -75,7 +75,7 @@ def check_quadruples_in_cols(candidate_board):
                     if len(second_candidate_cell) >= 2 and (len(second_candidate_cell) <= 4):
                         two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
                         if len(two_candidates_sum_values) == 3 or len(two_candidates_sum_values) == 4:
-                            print(f'Found pair for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})')
+                            #print(f'Found pair for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})')
 
                             # Search the remaining cells on the row for the third match
                             for third_candidate_row_index in range(second_candidate_row_index + 1, 9):
@@ -84,9 +84,9 @@ def check_quadruples_in_cols(candidate_board):
                                     three_candidates_sum_values = set.union(third_candidate_cell, two_candidates_sum_values)
                                     if len(three_candidates_sum_values) == 4:
 
-                                        print(f'Found triple for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
-                                              f' and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})'
-                                              f' and {third_candidate_cell} on ({third_candidate_row_index},{first_candidate_col_index})')
+                                        #print(f'Found triple for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
+                                        #      f' and {second_candidate_cell} on ({second_candidate_row_index},{first_candidate_col_index})'
+                                        #      f' and {third_candidate_cell} on ({third_candidate_row_index},{first_candidate_col_index})')
 
                                         # Search the remaining cells on the col for the fourth match
                                         for fourth_candidate_row_index in range(third_candidate_row_index + 1, 9):
@@ -112,7 +112,7 @@ def check_quadruples_in_areas(candidate_board):
 
             # For each cell
             if len(first_candidate_cell) >= 2 and (len(first_candidate_cell) <= 4):
-                print(f'Possible naked quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
+                #print(f'Possible naked quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index})')
 
                 # Iterate on the whole area
                 area_row_start = first_candidate_row_index - (first_candidate_row_index % 3)
@@ -126,7 +126,7 @@ def check_quadruples_in_areas(candidate_board):
                             if len(second_candidate_cell) >= 2 or len(second_candidate_cell) <= 4:
                                 two_candidates_sum_values = set.union(second_candidate_cell, first_candidate_cell)
                                 if len(two_candidates_sum_values) == 3 or len(two_candidates_sum_values) == 4:
-                                    print(f'Found pair for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{second_candidate_col_index})')
+                                    #print(f'Found pair for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}) and {second_candidate_cell} on ({second_candidate_row_index},{second_candidate_col_index})')
 
                                     # Search the cells on the area for the third match
                                     for third_candidate_row_index in range(area_row_start, area_row_end):
@@ -137,9 +137,9 @@ def check_quadruples_in_areas(candidate_board):
                                                 if len(third_candidate_cell) >= 2 or len(third_candidate_cell) <= 4:
                                                     three_candidates_sum_values = set.union(third_candidate_cell, two_candidates_sum_values)
                                                     if len(three_candidates_sum_values) == 4:
-                                                        print(f'Found threesome for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
-                                                              f' and {second_candidate_cell} on ({second_candidate_row_index},{second_candidate_col_index})'
-                                                              f' and {third_candidate_cell} on ({third_candidate_row_index},{third_candidate_col_index})')
+                                                        #print(f'Found threesome for possible quadruple with values {first_candidate_cell} on ({first_candidate_row_index},{first_candidate_col_index}), '
+                                                        #      f' and {second_candidate_cell} on ({second_candidate_row_index},{second_candidate_col_index})'
+                                                        #      f' and {third_candidate_cell} on ({third_candidate_row_index},{third_candidate_col_index})')
 
                                                         # Search the remaining cells on the area for the fourth match
                                                         for fourth_candidate_row_index in range(third_candidate_row_index + 1, area_row_end):
