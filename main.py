@@ -1,6 +1,7 @@
 import brute_force
 import human
 import util
+from ocr import ocr
 
 
 def create_board():
@@ -90,14 +91,15 @@ def create_board():
 
 
 if __name__ == '__main__':
-    board = create_board()
+    initial_board = ocr.load_board()
     print('######### Initial board is ######### ')
-    util.print_board(board)
+    util.print_board(initial_board)
 
-    board = human.solve(board)
+    solved_board = human.solve(initial_board)
 
     #print('######### Solving board with brute force######### ')
     #brute_force.solve_brute_force(board)
 
     print('######### Final board is ######### ')
-    util.print_board(board)
+    util.print_board(solved_board)
+    #ocr.display_solution(initial_board, solved_board)
