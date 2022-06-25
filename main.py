@@ -2,7 +2,7 @@ import brute_force
 import human
 import util
 from ocr import ocr
-
+from copy import copy
 
 def create_board():
     # board = [None] * 9
@@ -95,11 +95,13 @@ if __name__ == '__main__':
     print('######### Initial board is ######### ')
     util.print_board(initial_board)
 
-    solved_board = human.solve(initial_board)
+    solved_board = copy(initial_board)
+
+    solved_board = human.solve(solved_board)
 
     #print('######### Solving board with brute force######### ')
-    #brute_force.solve_brute_force(board)
+    #brute_force.solve_brute_force(solved_board)
 
     print('######### Final board is ######### ')
     util.print_board(solved_board)
-    #ocr.display_solution(initial_board, solved_board)
+    ocr.display_solution(initial_board, solved_board)

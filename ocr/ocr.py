@@ -12,13 +12,19 @@ model = load_model(os.path.join(ROOT_DIR, 'ocr', 'model-OCR.h5'))
 # print(model.summary())
 input_size = 48
 img = None
+board = None
 location = None
 predicted_number = None
 
 
 def load_board():
+    global img
+    global board
+    global location
+    global predicted_number
+
     # Read image
-    img = cv2.imread(os.path.join(ROOT_DIR, 'ocr', 'sudoku5.jpg'))
+    img = cv2.imread(os.path.join(ROOT_DIR, 'ocr', 'sudoku7.jpg'))
 
     # extract board from input image
     board, location = find_board(img)
@@ -71,6 +77,8 @@ def get_inv_perspective(img, masked_num, location, height=900, width=900):
 
 
 def find_board(img):
+    global location
+
     """Takes an image as input and finds a sudoku board inside of the image"""
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     bfilter = cv2.bilateralFilter(gray, 13, 20, 20)
@@ -123,29 +131,29 @@ def display_numbers(img, numbers, color=(0, 255, 0)):
     return img
 
 
-# def display_solution(initial_board, solved_board):
-#     try:
-#         # create a binary array of the predicted numbers. 0 means unsolved numbers of sudoku and 1 means given number.
-#         binArr = np.where(np.array(predicted_numbers) > 0, 0, 1)
-#         # print(binArr)
-#         # get only solved numbers for the solved board
-#         flat_solved_board_nums = solved_board.flatten() * binArr
-#         # create a mask
-#         mask = np.zeros_like(initial_board)
-#         # displays solved numbers in the mask in the same position where board numbers are empty
-#         solved_board_mask = display_numbers(mask, flat_solved_board_nums)
-#         # cv2.imshow("Solved Mask", solved_board_mask)
-#         inv = get_inv_perspective(img, solved_board_mask, location)
-#         # cv2.imshow("Inverse Perspective", inv)
-#         combined = cv2.addWeighted(img, 0.7, inv, 1, 0)
-#         cv2.imshow("Final result", combined)
-#         # cv2.waitKey(0)
-#     except:
-#         print("Solution doesn't exist. Model misread digits.")
-    #
-    # cv2.imshow("Input image", img)
-    # # cv2.imshow("Board", board)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+def display_solution(initial_board, solved_board):
+    global board
+    global img
+    global location
+
+    try:
+        binArr = np.where(np.array(initial_board.flatten()) > 0, 0, 1)
+        # print(binArr)
+        # get only solved numbers for the solved board
+        flat_solved_board_nums = solved_board.flatten() * binArr
+        # create a mask
+        mask = np.zeros_like(board)
+        # displays solved numbers in the mask in the same position where board numbers are empty
+        solved_board_mask = display_numbers(mask, flat_solved_board_nums)
+        # cv2.imshow("Solved Mask", solved_board_mask)
+        inv = get_inv_perspective(img, solved_board_mask, location)
+        # v2.imshow("Inverse Perspective", inv)
+        combined = cv2.addWeighted(img, 0.7, inv, 1, 0)
+        cv2.imshow("Final result", combined)
+        cv2.waitKey(0)
+    except Exception as e:
+        print("Solution doesn't exist. Model misread digits.")
+        print(e)
+
 
 load_board()
