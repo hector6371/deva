@@ -17,14 +17,15 @@ location = None
 predicted_number = None
 
 
-def load_board():
+def load_board(cv2_image):
     global img
     global board
     global location
     global predicted_number
+    global model
 
     # Read image
-    img = cv2.imread(os.path.join(ROOT_DIR, 'ocr', 'sudoku7.jpg'))
+    img = cv2_image
 
     # extract board from input image
     board, location = find_board(img)
@@ -131,7 +132,7 @@ def display_numbers(img, numbers, color=(0, 255, 0)):
     return img
 
 
-def display_solution(initial_board, solved_board):
+def generate_solved_image(initial_board, solved_board):
     global board
     global img
     global location
@@ -148,12 +149,11 @@ def display_solution(initial_board, solved_board):
         # cv2.imshow("Solved Mask", solved_board_mask)
         inv = get_inv_perspective(img, solved_board_mask, location)
         # v2.imshow("Inverse Perspective", inv)
-        combined = cv2.addWeighted(img, 0.7, inv, 1, 0)
-        cv2.imshow("Final result", combined)
-        cv2.waitKey(0)
+        return cv2.addWeighted(img, 0.7, inv, 1, 0)
+
     except Exception as e:
         print("Solution doesn't exist. Model misread digits.")
         print(e)
 
 
-load_board()
+# load_board()

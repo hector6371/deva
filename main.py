@@ -1,6 +1,11 @@
+import os
+
+import cv2
+
 import brute_force
 import human
 import util
+from config import ROOT_DIR
 from ocr import ocr
 from copy import copy
 
@@ -90,8 +95,8 @@ def create_board():
 #     pass
 
 
-if __name__ == '__main__':
-    initial_board = ocr.load_board()
+def solve(cv2_image):
+    initial_board = ocr.load_board(cv2_image)
     print('######### Initial board is ######### ')
     util.print_board(initial_board)
 
@@ -104,4 +109,11 @@ if __name__ == '__main__':
 
     print('######### Final board is ######### ')
     util.print_board(solved_board)
-    ocr.display_solution(initial_board, solved_board)
+    return ocr.generate_solved_image(initial_board, solved_board)
+
+
+if __name__ == '__main__':
+    cv2_image = cv2.imread(os.path.join(ROOT_DIR, 'ocr', 'sudoku8.jpg'))
+    solved_image = solve(cv2_image)
+    cv2.imshow("Final result", solved_image)
+    cv2.waitKey(0)
