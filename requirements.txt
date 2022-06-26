@@ -1,0 +1,6 @@
+Flask==2.1.2
+imutils==0.5.4
+numpy==1.22.3
+opencv_python==4.6.0.66
+solver==0.0.4
+tensorflow==2.8.0
